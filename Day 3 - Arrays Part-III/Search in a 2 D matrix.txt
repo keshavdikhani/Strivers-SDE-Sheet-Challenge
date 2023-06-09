@@ -1,0 +1,55 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& arr, int target) {
+        int n=arr.size();
+        int m=arr[0].size();
+
+        if(arr[0][0]>target){
+            return false;
+        }
+
+        int row=-1;
+        int start=0;
+        int end=n-1;
+        if(n==1){
+            row=0;
+        }
+        else{
+            while(start<=end){
+            int mid=(start+end)/2;
+            if(mid==n-1 && arr[mid][0]<=target){
+                row=mid;
+                break;
+            }
+            else if(arr[mid][0]<=target && ((mid+1)<n && arr[mid+1][0]>target)){
+                row=mid;
+                break;
+            }
+            else if(arr[mid][0]>target){
+                end=mid-1;
+            }
+            else{
+                start=mid+1;
+            }
+        }
+
+        }
+        
+
+        int low=0;
+        int high=m-1;
+        while(low<=high){
+            int centre=(low+high)/2;
+            if(arr[row][centre]==target){
+                return true;
+            }
+            else if(arr[row][centre]<target){
+                low=centre+1;
+            }
+            else{
+                high=centre-1;
+            }
+        }
+        return false;
+    }
+};
